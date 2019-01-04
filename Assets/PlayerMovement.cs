@@ -8,11 +8,19 @@ public class PlayerMovement : MonoBehaviour
 
     public float forwardForce = 1000f;
     public float sidewaysForce = 1000f;
-    public float jumpForce = 1000f;
+    public float jumpForce = 200f;
+    public bool isGrounded = true;
 
+    void OnCollisionStay(Collision other)
+    {
+        isGrounded = true;
+    }
     // FixedUpdate is called once per frame for consistent intervals
     void FixedUpdate()
     {
+
+        rb.AddForce(0, -jumpForce * Time.deltaTime, 0);
+
         // Forward
         if(Input.GetKey("w"))
         {
@@ -35,6 +43,13 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey("s"))
         {
             rb.AddForce(0, 0, -forwardForce * Time.deltaTime);
+        }
+
+        // Jump
+        if(Input.GetKeyDown("space") && isGrounded)
+        {
+            rb.AddForce(0, 100 * jumpForce * Time.deltaTime, 0);
+            isGrounded = false;
         }
     }
 }
