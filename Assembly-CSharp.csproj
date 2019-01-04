@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\FollowPlayer.cs" />
+     <Compile Include="Assets\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Unity Projects/3dplatformer/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
