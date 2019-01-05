@@ -4,23 +4,37 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     public float forwardForce = 1000f;
     public float sidewaysForce = 1000f;
-    public float jumpForce = 200f;
+    //public float jumpForce = 2f;
     public bool isGrounded = true;
+
+    public float fallMultiplier = 240f;
+    public float lowJumpMultiplier = 2f;
+
+    void Awake() {
+        rb = GetComponent<Rigidbody>();
+    }
 
     void OnCollisionStay(Collision other)
     {
-        isGrounded = true;
+        if(other.gameObject.tag == "ground" || other.gameObject.tag == "platform")
+            isGrounded = true;
+        else
+            isGrounded = false;
+        Debug.Log(isGrounded);
     }
-    // FixedUpdate is called once per frame for consistent intervals
-    void FixedUpdate()
+
+    IEnumerator wait(int seconds)
     {
+        yield return new WaitForSeconds(seconds);
+    }
 
-        rb.AddForce(0, -jumpForce * Time.deltaTime, 0);
-
+    // FixedUpdate is called once per frame for consistent intervals
+    void Update()
+    {
         // Forward
         if(Input.GetKey("w"))
         {
@@ -46,10 +60,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        if(Input.GetKeyDown("space") && isGrounded)
-        {
-            rb.AddForce(0, 100 * jumpForce * Time.deltaTime, 0);
-            isGrounded = false;
-        }
+        /* 
+        //if(Input.GetKey("space")) // && isGrounded)
+        //{
+            //rb.AddForce(0, 50 * jumpForce * Time.deltaTime, 0);
+            //isGrounded = false;
+            if(rb.velocity.y < 0) {
+                rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            } else if(rb.velocity.y > 0 && !Input.GetButton("Jump")) {
+                rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+            }
+        //}
+        */
+        Debug.Log(rb.velocity.y);
     }
 }
