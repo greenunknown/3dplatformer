@@ -62,7 +62,5 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(0, 100 * jumpForce * Time.deltaTime, 0);
             isGrounded = false;
         }
-
-        Debug.Log(rb.velocity.y);
     }
 }
