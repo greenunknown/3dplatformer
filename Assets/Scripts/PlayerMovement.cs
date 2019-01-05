@@ -8,11 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float forwardForce = 1000f;
     public float sidewaysForce = 1000f;
-    //public float jumpForce = 2f;
+    public float jumpForce = 200f;
     public bool isGrounded = true;
-
-    public float fallMultiplier = 240f;
-    public float lowJumpMultiplier = 2f;
 
     void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -60,18 +57,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Jump
-        /* 
-        //if(Input.GetKey("space")) // && isGrounded)
-        //{
-            //rb.AddForce(0, 50 * jumpForce * Time.deltaTime, 0);
-            //isGrounded = false;
-            if(rb.velocity.y < 0) {
-                rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-            } else if(rb.velocity.y > 0 && !Input.GetButton("Jump")) {
-                rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-            }
-        //}
-        */
+        if(Input.GetKeyDown("space") && isGrounded)
+        {
+            rb.AddForce(0, 100 * jumpForce * Time.deltaTime, 0);
+            isGrounded = false;
+        }
+
         Debug.Log(rb.velocity.y);
     }
 }
